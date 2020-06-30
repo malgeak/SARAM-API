@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuario;
+use App\Moto;
 class UserController extends Controller
 {
     public function registro (Request $request){
@@ -47,27 +48,176 @@ class UserController extends Controller
     }
     
     public function login (Request $request){
+        //JWT 
+        $jwt = new \JWTAuth();
         //Recogemos los datos
         $params_array['correo']= $request->input('Correo', null);
         $params_array['contrasena']= $request->input('Contrasena', null);
-        //Cifrado de contraseña
-            $pwd = hash('sha256', $params_array['contrasena']);
-        //Validar credenciales
-        $user = Usuario::where([
-           'Correo'=>$params_array['correo'],
-           'Contrasena'=>$pwd
-        ])->first();
-        if(is_object($user)){
-            $data=array(
-              'status'=>true,
-              'mensaje'=>"Bienvenido"
+        
+        $validate = \Validator::make($params_array, [
+            "correo" => 'required',
+            "contrasena" => 'required'
+        ]);
+        if($validate->fails()){
+            //Validación fallida
+            $data = array(
+              'status' => false,
+              'mensaje' => "Es necesario que ingrese todos los datos"  
             );
         }else{
+            //Cifrado de contraseña
+            $pwd = hash('sha256', $params_array['contrasena']);
+            
+            $data = $jwt->credentials($params_array['correo'], $pwd);
+        }
+        
+        
+        echo json_encode($data);
+    }
+    
+    public function AddMoto(Request $request){
+        //Recibimos parametros.
+        $params_array['Modelo']=$request->input('Modelo', null);
+        $params_array['Marca']=$request->input('Marca', null);
+        $params_array['Cilindraje']=$request->input('Cilindraje', null);
+        $params_array['Placa']=$request->input('Placa', null);
+        $params_array['SARAM']=$request->input('SARAM', null);
+        
+        $validate = \Validator::make($params_array, [
+           "Modelo" => 'required',
+           "Marca" => 'required',
+           "Cilindraje" => 'required',
+           "Placa" => 'required',
+            "SARAM" => 'required'
+        ]);
+        
+        if($validate->fails()){
+            $data = array(
+              'status' => false,
+              'mensaje' => "Es necesario que ingrese todos los datos"  
+            );
+        }else{
+            //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+            
+            //Validacion placa y SARAM code
+            $placa = Moto::where(['Placa'=>$params_array['Placa']])->first();
+            $saram = Moto::where(['ID_saram'=>$params_array['SARAM']])->first();
+            
+            if(is_object($saram)){
+                $data = array(
+                    'status' => false,
+                    'mensaje' => "Codigo SARAM ya utilizado",
+                    'variable'  =>  "SARAM"
+                    );    
+                return json_encode($data);
+            }
+            if(is_object($placa)){
+                $data = array(
+                    'status' => false,
+                    'mensaje' => "Placa ya registrada",
+                    'variable'  =>  "Placa"
+                    );    
+                return json_encode($data);
+            }
+            //Instancia de modelo Moto
+            $Moto = new Moto();
+            $Moto->ID_usuario = $User->sub;
+            $Moto->Modelo = $params_array['Modelo'];
+            $Moto->Marca = $params_array['Marca'];
+            $Moto->Cilindraje = $params_array['Cilindraje'];
+            $Moto->Placa = $params_array['Placa'];
+            $Moto->ID_saram = $params_array['SARAM'];
+            $Moto->save();
             $data=array(
-              'status'=>false,
-              'mensaje'=>"Email o contraseña incorrecta, por favor verefique sus datos."
+              'status'=>true,
+              'mensaje'=>"Moto registrada exitosamente"
             );
         }
         echo json_encode($data);
+    }
+    public function UpdateMoto(Request $request){
+        //Recibimos parametros.
+        $params_array['Modelo']=$request->input('Modelo', null);
+        $params_array['Marca']=$request->input('Marca', null);
+        $params_array['Cilindraje']=$request->input('Cilindraje', null);
+        $params_array['Placa']=$request->input('Placa', null);
+        $params_array['SARAM']=$request->input('SARAM', null);
+        $params_array['ID_Motocicleta'] = $request->input('ID_Moto', null);
+        
+        $validate = \Validator::make($params_array, [
+           "Modelo" => 'required',
+           "Marca" => 'required',
+           "Cilindraje" => 'required',
+           "Placa" => 'required',
+           "SARAM" => 'required',
+           "ID_Motocicleta" => 'required'
+        ]);
+        
+        
+        if($validate->fails()){
+            $data = array(
+              'status' => false,
+              'mensaje' => "Es necesario que ingrese todos los datos",
+            );
+        }else{
+            //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+             //Validacion placa y SARAM code
+            $placa = Moto::where(['Placa'=>$params_array['Placa']])
+                    ->where('ID_Motocicleta', '<>', $params_array['ID_Motocicleta'])->first();
+            $saram = Moto::where(['ID_saram'=>$params_array['SARAM']])
+                    ->where('ID_Motocicleta', '<>', $params_array['ID_Motocicleta'])->first();
+            
+            if(is_object($saram)){
+                $data = array(
+                    'status' => false,
+                    'mensaje' => "Codigo SARAM ya utilizado",
+                    'variable'  =>  "SARAM"
+                    );    
+                return json_encode($data);
+            }
+            if(is_object($placa)){
+                $data = array(
+                    'status' => false,
+                    'mensaje' => "Placa ya registrada",
+                    'variable'  =>  "Placa"
+                    );    
+                return json_encode($data);
+            }
+            //Actualización
+            Moto::where(
+                ['ID_usuario'=>$User->sub,
+                'ID_Motocicleta'=>$params_array['ID_Motocicleta']])->update([
+                    'Modelo'=>$params_array['Modelo'],
+                    'Marca'=>$params_array['Marca'],
+                    'Cilindraje'=>$params_array['Cilindraje'],
+                    'Placa'=>$params_array['Placa'],
+                    'ID_saram'=>$params_array['SARAM']
+                ]);
+            
+            $data=array(
+              'status'=>true,
+              'mensaje'=>"Moto actualizada exitosamente"
+            );
+        }
+        echo json_encode($data);
+    }
+    public function getMotos(Request $request){
+        //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+        //Obtenemos todas sus motos
+            $Motos = Moto::where(['ID_usuario'=>$User->sub])->get();
+            $data=array(
+              'status'=>true,
+              'motos'=>$Motos
+            );
+            echo json_encode($data);
     }
 }

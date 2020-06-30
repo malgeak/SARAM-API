@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Usuario extends Model
 {
-     protected $fillable = [
+    protected $table="usuarios";
+    protected $fillable = [
         'Nombre', 'Apellidos', 'Correo','Contrasena', 'Edad', 'Direccion',
          'Telefono', 'Tipo_sangre', 'Alergias', 'Religion', 'Informacion_adicional',
     ];
@@ -19,4 +20,8 @@ class Usuario extends Model
     protected $hidden = [
         'Contrasena',
     ];
+    
+    public function Motos(){
+        return $this->hasMany('App\Moto');
+    }
 }
