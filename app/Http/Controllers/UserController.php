@@ -220,4 +220,28 @@ class UserController extends Controller
             );
             echo json_encode($data);
     }
+    
+    public function getUser(Request $request){
+        //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+        //Obtenemos todos los datos
+            $Usuario = Usuario::where(['ID_usuario'=>$User->sub])->first();
+            echo json_encode($Usuario);
+    }
+    public function userReady(Request $request){
+        //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+        //Obtenemos todos los datos
+            $Usuario = Usuario::where(['ID_usuario'=>$User->sub])->first();
+            $Ready = true;
+            if (is_null($Usuario->Edad) || is_null($Usuario->Direccion))
+                $Ready=false;
+            $data = array("ready"=>$Ready);
+            echo json_encode($data);
+            
+    }
 }
