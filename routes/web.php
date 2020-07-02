@@ -25,4 +25,6 @@ Route::post('/api/updatemoto', 'UserController@UpdateMoto')->middleware(AuthMidd
 Route::post('/api/getmotos', 'UserController@getMotos')->middleware(AuthMiddleware::class);
 Route::post('/api/getuser', 'UserController@getUser')->middleware(AuthMiddleware::class);
 Route::post('/api/userisReady', 'UserController@userReady')->middleware(AuthMiddleware::class);
+Route::post('/api/updateUser', 'UserController@updateUser')->middleware(AuthMiddleware::class);
+
 

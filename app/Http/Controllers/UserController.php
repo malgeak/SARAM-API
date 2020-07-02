@@ -238,10 +238,107 @@ class UserController extends Controller
         //Obtenemos todos los datos
             $Usuario = Usuario::where(['ID_usuario'=>$User->sub])->first();
             $Ready = true;
-            if (is_null($Usuario->Edad) || is_null($Usuario->Direccion))
+            if (is_null($Usuario->Edad) || is_null($Usuario->Direccion)
+                    || is_null($Usuario->Telefono) || is_null($Usuario->Sexo))
                 $Ready=false;
             $data = array("ready"=>$Ready);
             echo json_encode($data);
             
+    }
+    
+    public function updateUser (Request $request){
+        //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+            //Recogemos los datos
+        $params_array['nombre']= $request->input('Nombre', null);
+        $params_array['apellidos']= $request->input('Apellidos', null);
+        $params_array['correo']= $request->input('Correo', null);
+        $params_array['Edad']= $request->input('Edad', null);
+        $params_array['Sexo']= $request->input('Sexo', null);
+        $params_array['Direccion']= $request->input('Direccion', null);
+        $params_array['Telefono']= $request->input('Telefono', null);
+        $params_array['Tipo_Sangre']= $request->input('Tipo_Sangre', null);
+        $params_array['Alergias']= $request->input('Alergias', null);
+        $params_array['Religion']= $request->input('Religion', null);
+        $params_array['Extras']= $request->input('Extras', null);
+        //Validar Datos
+        $validate = \Validator::make($params_array, [
+           'nombre'=>'required|regex:{^[a-zA-Z ]+$}',
+           'apellidos'=>'required|regex:{^[a-zA-Z ]+$}', 
+           'correo'=>'required|email',
+        ]);
+           
+        if($validate->fails()){
+            $data = array(
+                "status" => false,
+                "mensaje" => "Verifique los campos solicitados",
+                "errores" => $validate->errors()
+            );
+        }else{
+        $correo = Usuario::where(["Correo" => $params_array['correo']])
+                ->where("ID_usuario", "<>", $User->sub)->first();
+        if(is_object($correo)){
+            $data = array(
+                "status" => false,
+                "mensaje" => "Correo ya registrado por otro usuario",
+                "Campo" => "Correo"
+            );
+            return $data;
+        }  
+        $Usuario= Usuario::where(["ID_usuario"=>$User->sub])->first();
+        
+        $Usuario->Nombre = $params_array['nombre'];
+        $Usuario->Apellidos = $params_array['apellidos'];
+        $Usuario->Correo = $params_array['correo'];
+        if(!is_null($params_array['Edad'])){
+            $validate = \Validator::make($params_array, [
+             'Edad' => 'date'
+            ]);
+            if($validate->fails()){
+              $data = array(
+                "status" => false,
+                "mensaje" => "Fecha con formato invalido",
+                "Campo" => "Fecha"
+                );
+              return $data;
+            }
+            $Usuario->Edad = $params_array['Edad'];
+        }
+        if(!is_null($params_array['Sexo']))
+            $Usuario->Sexo = $params_array['Sexo'];
+        if(!is_null($params_array['Direccion']))
+            $Usuario->Direccion = $params_array['Direccion'];
+        if(!is_null($params_array['Telefono'])){
+            $validate = \Validator::make($params_array, [
+             'Telefono' =>  'regex:/^\d{10,13}$/'
+            ]);
+            if($validate->fails()){
+              $data = array(
+                "status" => false,
+                "mensaje" => "Numero de telefono invalido",
+                "Campo" => "Telefono"
+                );
+              return $data;
+            }
+            $Usuario->Telefono = $params_array['Telefono'];
+        }
+        if(!is_null($params_array['Tipo_Sangre']))
+            $Usuario->Tipo_sangre = $params_array['Tipo_Sangre'];
+        if(!is_null($params_array['Alergias']))
+            $Usuario->Alergias = $params_array['Alergias'];
+        if(!is_null($params_array['Religion']))
+            $Usuario->Religion = $params_array['Religion'];
+        if(!is_null($params_array['Extras']))
+            $Usuario->Informacion_adicional = $params_array['Extras'];
+        
+        $Usuario->save();
+        $data = array(
+            "status" => true,
+            "mensaje" => "La actualización de sus datos fué exitosa"
+        );
+        }
+        echo json_encode($data);
     }
 }
