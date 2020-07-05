@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Usuario;
 use App\Moto;
+use App\Device;
+use App\Contactos;
+
 class UserController extends Controller
 {
     public function registro (Request $request){
@@ -105,6 +108,7 @@ class UserController extends Controller
             //Validacion placa y SARAM code
             $placa = Moto::where(['Placa'=>$params_array['Placa']])->first();
             $saram = Moto::where(['ID_saram'=>$params_array['SARAM']])->first();
+            $validar_saram = Device::where(['ID_saram'=>$params_array['SARAM']])->first();
             
             if(is_object($saram)){
                 $data = array(
@@ -122,6 +126,7 @@ class UserController extends Controller
                     );    
                 return json_encode($data);
             }
+            if(is_object($validar_saram)){
             //Instancia de modelo Moto
             $Moto = new Moto();
             $Moto->ID_usuario = $User->sub;
@@ -135,8 +140,24 @@ class UserController extends Controller
               'status'=>true,
               'mensaje'=>"Moto registrada exitosamente"
             );
+            }else{
+            $data=array(
+              'status'=>false,
+              'mensaje'=>"Codigo Saram invalido"
+            );    
+            }
         }
         echo json_encode($data);
+    }
+    public function DeleteMoto(Request $request){
+        $params_array['ID_Motocicleta'] = $request->input('ID_Moto', null);
+        Moto::where(['ID_Motocicleta'=>$params_array['ID_Motocicleta']])->delete();
+        $data = array(
+            "status" => true,
+            "mensaje"=> "Motocicleta elimnida"
+        );
+        
+        return json_encode($data);
     }
     public function UpdateMoto(Request $request){
         //Recibimos parametros.
@@ -172,7 +193,7 @@ class UserController extends Controller
                     ->where('ID_Motocicleta', '<>', $params_array['ID_Motocicleta'])->first();
             $saram = Moto::where(['ID_saram'=>$params_array['SARAM']])
                     ->where('ID_Motocicleta', '<>', $params_array['ID_Motocicleta'])->first();
-            
+            $validar_saram = Device::where(['ID_saram'=>$params_array['SARAM']])->first();
             if(is_object($saram)){
                 $data = array(
                     'status' => false,
@@ -189,6 +210,7 @@ class UserController extends Controller
                     );    
                 return json_encode($data);
             }
+            if(is_object($validar_saram)){
             //Actualización
             Moto::where(
                 ['ID_usuario'=>$User->sub,
@@ -204,6 +226,12 @@ class UserController extends Controller
               'status'=>true,
               'mensaje'=>"Moto actualizada exitosamente"
             );
+           }else{
+               $data=array(
+              'status'=>false,
+              'mensaje'=>"Codigo SARAM invalido"
+            );
+           }
         }
         echo json_encode($data);
     }
@@ -220,7 +248,73 @@ class UserController extends Controller
             );
             echo json_encode($data);
     }
+    public function setContactos (Request $request){
+        //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+            
+        //Recogemos datos
+            $params_array['Nombre']=$request->input('Nombre', null);
+            $params_array['Apellidos']=$request->input('Apellidos', null);
+            $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
+            $params_array['Correo']=$request->input('Correo', null);
+            
+        $Contacto = new Contactos();
+        $Contacto->ID_Usuario = $User->sub;
+        $Contacto->Nombre =  $params_array['Nombre'];
+        if(!is_null($params_array['Apellidos']))
+              $Contacto->Apellidos = $params_array['Apellidos'];
+        $Contacto->Numero_Tel =  $params_array['Numero_Tel'];
+        if(!is_null($params_array['Correo']))
+            $Contacto->Correo =  $params_array['Correo'];
+        $Contacto->save();
+        
+        $data = array([
+            "status"=>true,
+            "mensaje"=>"Contacto de emergencia registrado"
+        ]);
+        
+        return json_encode($data);
+    }
     
+    public function delContactos (Request $request){
+        //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+            
+        //Recogemos datos
+            $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
+            
+            Contactos::where(['Numero_Tel'=>$params_array['Numero_Tel'], 
+                'ID_Usuario'=>$User->sub])->delete();
+            
+        $data = array([
+            "status"=>true,
+            "mensaje"=>"Contacto de emergencia eliminado"
+        ]);
+        
+        return json_encode($data);
+    }
+    
+    public function getContactos (Request $request){
+        //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+            
+        //Recogemos datos
+            $Contactos = Contactos::where([
+                'ID_Usuario'=>$User->sub])->get();
+            
+        $data = array([
+            "status"=>true,
+            "contactos"=>$Contactos
+        ]);
+        
+        return json_encode($data);
+    }
     public function getUser(Request $request){
         //Desencriptamos token para obtener información del usuario
             $token = $request->header('Authorization'); 

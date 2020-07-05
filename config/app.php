@@ -228,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => App\Helpers\JWTAuth::class,
+        'TokenDevice' => App\Helpers\TokenDevice::class,
     ],
 
 ];
