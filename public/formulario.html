@@ -4,11 +4,11 @@
 	<title>SCRAM</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/index1.css">
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-danger bg-light">
+	<nav class="navbar navbar-expand-lg navbar-outline-danger bg-light">
   <a class="navbar-brand" href="#"><img src="img/saram.png" class="imag"><img src="img/name.png" class="imag"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -16,6 +16,9 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+    <li>
+    	<img src="img/Casco.png" class="jojo">
+    </li>
       <li class="nav-item active">
         <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
       </li>
@@ -36,26 +39,35 @@
 	<div class="modal-dialog text-center">
 		<div class="col-ms-8 " id="main-section">
 			<div class="modal-content">
-				<p>¿Estas Listo? Inicia Sesion</p>
+				<p>¿Nuevo Usuario? Registrate</p>
 				<form class="col-12">
-					<img src="img/Casco.png" id="gh">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Correo electronico"/>
+						<input type="text" class="form-control" placeholder="Nombres(s)"/>
 					</div>
-					<img src="img/candado.png" id="gh">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Apellidos"/>
+					</div>
+					<div class="form-group">
+						<input type="tel" class="form-control" placeholder="Telefono"/>
+					</div>
+					<div class="form-group">
+						<input type="email" class="form-control" placeholder="Correo electronico"/>
+					</div>
+					<div class="form-group">
+						<input type="date" class="form-control" placeholder="Dia/Mes/Año"/>
+					</div>
 					<div class="form-group">
 						<input type="password" class="form-control" placeholder="Contraseña"/>
 					</div>
-					<button type="button" class="btn btn-danger"></i>Iniciar Sesion</button>
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="Confirma Contraseña"/>
+					</div>
+					<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Acepto Termino y Condiciones</label>
+  </div>
+					<button type="button" class="btn btn-danger"></i>Registrate</button>
 				</form>
-				<div class="col-12">
-						<a href="#">¿Olvido su Contraceña?</a>
-					</div><br><br><br>
-
-				<div class="col-12 forgot">
-					<a href="#">¿Aún no tienes cuenta?Regisrate aqui</a>
-				</div>
-				
 			</div>
 		</div>
 	</div>
@@ -79,4 +91,4 @@
 <script src="js/popper.min"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
-</html><?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/welcome.blade.php ENDPATH**/ ?>
+</html>

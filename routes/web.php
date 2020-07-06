@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/api/saveDatos', 'sarv1Controller@saveDatos')->middleware(DeviceMiddleware::class);
+
 //Rutas Post
 Route::post('/api/registerUser', 'UserController@registro');
 Route::post('/api/login', 'UserController@login');
@@ -28,7 +30,6 @@ Route::post('/api/getuser', 'UserController@getUser')->middleware(AuthMiddleware
 Route::post('/api/userisReady', 'UserController@userReady')->middleware(AuthMiddleware::class);
 Route::post('/api/updateUser', 'UserController@updateUser')->middleware(AuthMiddleware::class);
 //Route::post('/api/getDeviceToken', 'sarv1Controller@setUpdate');
-Route::post('/api/saveDatos', 'sarv1Controller@saveDatos')->middleware(DeviceMiddleware::class);
 Route::post('/api/getEstado', 'sarv1Controller@getDatos')->middleware(AuthMiddleware::class);
 Route::post('/api/getUbicacion', 'sarv1Controller@getUbicacion')->middleware(AuthMiddleware::class);
 Route::post('/api/setContactos', 'UserController@setContactos')->middleware(AuthMiddleware::class);

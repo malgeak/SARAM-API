@@ -21,7 +21,7 @@ class sarv1Controller extends Controller
     
     public function saveDatos(Request $request){
         //Desencriptamos token para obtener información del usuario
-            $token = $request->header('Authorization'); 
+            $token = $request->input('Authorization', null); 
             $jwtAuth = new \TokenDevice();
             $Device = $jwtAuth->checkToken($token, true);
             

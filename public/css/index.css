@@ -1,0 +1,75 @@
+body{
+	background: url(../img/backLogin.jpg) no-repeat center center fixed;
+	background-size: cover;
+}
+
+#main-section {
+	width: 80%;
+	height: 30%;
+	margin-top: 20%; 
+	margin-left: -40%;
+	
+}
+
+p{
+	font-size: 24px;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.form-group{
+	z-index: 1;
+	margin-left: 5%;
+}
+.form-group input{
+	border-color: red;
+	font-size: 18px; 
+}
+.form-group input::placeholder{
+	color: red;
+	font-size: 20px;
+	text-align: center;
+	font-weight: normal;
+}
+
+#gh{
+	width: 20px;
+	height:20px;
+	margin-left: -90%;
+	z-index: -1;
+	
+
+}
+button{
+	width:90%; 
+	margin:5px 0 25px;
+	margin-left: 5%;
+}
+.forgot{
+padding: 5px 0;
+}
+.forgot a{
+	color: black;
+	font-weight: normal;
+}
+
+.imag{
+	width: 90px;
+	position: relative;
+	top: 30px;
+  left: -10px;
+}
+.contacto{
+	width: 150px;
+	position: relative;
+	top: 1px;
+  left: 700px;
+}
+.navbar {
+	width: 1366px;
+	height: 90px;
+}
+.nav-item{
+	left: 600px;
+	position: relative;
+}
