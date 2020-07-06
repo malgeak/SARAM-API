@@ -23,7 +23,10 @@ class sarv1Controller extends Controller
         //Desencriptamos token para obtener información del usuario
             $token = $request->input('Authorization', null); 
             $jwtAuth = new \TokenDevice();
+            if($jwtAuth->checkToken($token)){
             $Device = $jwtAuth->checkToken($token, true);
+            
+            
             
         //Recibimos los datos
             $params_array['Estado']=$request->input('estado', null);
@@ -49,6 +52,9 @@ class sarv1Controller extends Controller
                 $Estado->longitud=$params_array['Longitud'];
                 $Estado->latitud=$params_array['Latitud'];
                 $Estado->save();
+            }}
+            else{
+                echo "Error de autenticación";
             }
     }
     

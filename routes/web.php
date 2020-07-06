@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/api/saveDatos', 'sarv1Controller@saveDatos')->middleware(DeviceMiddleware::class);
+Route::get('/api/saveDatos', 'sarv1Controller@saveDatos');
 
 //Rutas Post
 Route::post('/api/registerUser', 'UserController@registro');
