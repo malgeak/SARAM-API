@@ -21,20 +21,15 @@ class sarv1Controller extends Controller
     
     public function saveDatos(Request $request){
         //Desencriptamos token para obtener información del usuario
-            $token = $request->input('Authorization', null); 
-            $jwtAuth = new \TokenDevice();
-            if($jwtAuth->checkToken($token)){
-            $Device = $jwtAuth->checkToken($token, true);
-            
-            
-            
+            $ID_device = $request->input("vs", null);
+            if(!is_null($ID_device)){
         //Recibimos los datos
-            $params_array['Estado']=$request->input('estado', null);
-            $params_array['Longitud']=$request->input('longitud', null);
-            $params_array['Latitud']=$request->input('latitud', null);
+            $params_array['Estado']=$request->input('ve', null);
+            $params_array['Longitud']=$request->input('lon', null);
+            $params_array['Latitud']=$request->input('lat', null);
             
         //Comprobar si ya existe registro.
-            $Moto = Moto::select("ID_Motocicleta")->where(["ID_saram"=>$Device->sub])->first();
+            $Moto = Moto::select("ID_Motocicleta")->where(["ID_saram"=>$ID_device])->first();
             
             $registro = Estado::where(['ID_motocicleta'=>$Moto->ID_Motocicleta])->first();
             
