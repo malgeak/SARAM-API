@@ -58,8 +58,9 @@ class sarv1Controller extends Controller
             $token = $request->header('Authorization'); 
             $jwtAuth = new \JWTAuth();
             $User = $jwtAuth->checkToken($token, true);
-        
-            $ID_motos=Moto::select("ID_Motocicleta")->where(['ID_usuario'=>$User->sub])->get();
+            $ID_motocicleta = $request->input('ID_motocicleta');
+            
+            $ID_motos=Moto::select("ID_Motocicleta")->where(['ID_usuario'=>$User->sub, 'ID_Motocicleta' => $ID_motocicleta])->get();
             
             foreach ($ID_motos as $Moto => $ID) {
                 $Estado = Estado::where(['ID_motocicleta'=>$ID->ID_Motocicleta])->first();
