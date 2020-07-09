@@ -259,6 +259,15 @@ class UserController extends Controller
             $params_array['Apellidos']=$request->input('Apellidos', null);
             $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
             $params_array['Correo']=$request->input('Correo', null);
+        $numero_existe = Contactos::where(["ID_Usuario"=>$User->sub, "Numero_Tel"=>$params_array['Numero_Tel']])->first();
+        
+        if(is_object($numero_existe)){
+            $data = array([
+            "status"=>false,
+            "mensaje"=>"Contacto ya registrado"
+            ]);
+            return json_encode($data);
+        }
             
         $Contacto = new Contactos();
         $Contacto->ID_Usuario = $User->sub;
