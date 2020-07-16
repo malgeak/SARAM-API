@@ -17,7 +17,9 @@ use App\Http\Middleware\DeviceMiddleware;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/cpanel', function () {
+    return view('cpanel');
+});
 Route::get('/api/saveDatos', 'sarv1Controller@saveDatos');
 
 //Rutas Post
