@@ -21,4 +21,4 @@
       </li>    
     </ul>
   </div>  
-</nav><?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/headers/head.blade.php ENDPATH**/ ?>
+</nav><?php /**PATH /var/www/saram.com/resources/views/Headers/head.blade.php ENDPATH**/ ?>

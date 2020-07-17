@@ -37,4 +37,4 @@
 			<div class="col-xl-12 col-lg-12 col-md-12 d-none d-md-block d-sm-block" style="height: 20px;"></div>
 		</div>
 	</div>
-</div><?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/Contents/contacto.blade.php ENDPATH**/ ?>
+</div><?php /**PATH /var/www/saram.com/resources/views/Contents/contacto.blade.php ENDPATH**/ ?>

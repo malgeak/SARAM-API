@@ -118,4 +118,4 @@
 
 </body>
 
-</html>
+</html><?php /**PATH /var/www/saram.com/resources/views/cpanel.blade.php ENDPATH**/ ?>

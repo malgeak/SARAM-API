@@ -9,7 +9,7 @@
     </head>
     <body class="" style="background: #131313;">
     	<div style="max-height: 110px;">
-    	<?php echo $__env->make('headers.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?> 
+    	<?php echo $__env->make('Headers.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?> 
     	</div>
     	<div class="fixed" style="padding-top: 110px;">
     	<div class="" style="width: 100%;">
@@ -34,4 +34,4 @@
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 </html>
-<?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/welcome.blade.php ENDPATH**/ ?>
+<?php /**PATH /var/www/saram.com/resources/views/welcome.blade.php ENDPATH**/ ?>

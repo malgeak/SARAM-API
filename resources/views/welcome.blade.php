@@ -9,7 +9,7 @@
     </head>
     <body class="" style="background: #131313;">
     	<div style="max-height: 110px;">
-    	@include('headers.head') 
+    	@include('Headers.head') 
     	</div>
     	<div class="fixed" style="padding-top: 110px;">
     	<div class="" style="width: 100%;">

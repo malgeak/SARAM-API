@@ -49,4 +49,4 @@
             <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
           </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
-</div><?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/Contents/acercade.blade.php ENDPATH**/ ?>
+</div><?php /**PATH /var/www/saram.com/resources/views/Contents/acercade.blade.php ENDPATH**/ ?>

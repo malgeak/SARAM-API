@@ -259,6 +259,61 @@ class UserController extends Controller
             $params_array['Apellidos']=$request->input('Apellidos', null);
             $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
             $params_array['Correo']=$request->input('Correo', null);
+
+            $validate = \Validator::make($params_array, [
+           'Nombre'=>'required',
+           'Numero_Tel'=>'required', 
+            ]);
+
+
+            if ($validate->fails()) {
+                $data = array([
+                "status"=>false,
+                "mensaje"=>"Ingrese los campos con *, son obligatorios"
+                ]);
+                return json_encode($data);
+            }
+
+
+            $validate = \Validator::make($params_array, [
+           'Nombre'=>'regex:{^[a-zA-Z ]+$}',
+            ]);
+
+            if ($validate->fails()) {
+                $data = array([
+                "status"=>false,
+                "mensaje"=>"Nombre invalido"
+                ]);
+                return json_encode($data);
+            }
+            if(!is_null($params_array['Apellidos'])){
+            $validate = \Validator::make($params_array, [
+           'Apellidos'=>'regex:{^[a-zA-Z ]+$}',
+            ]);
+
+            if ($validate->fails()) {
+                $data = array([
+                "status"=>false,
+                "mensaje"=>"Apellido invalido"
+                ]);
+                return json_encode($data);
+            }
+            }
+            if(!is_null($params_array['Correo'])){
+            $validate = \Validator::make($params_array, [
+           'Correo'=>'email',
+            ]);
+
+            if ($validate->fails()) {
+                $data = array([
+                "status"=>false,
+                "mensaje"=>"Correo invalido"
+                ]);
+                return json_encode($data);
+            }
+            }
+
+
         $numero_existe = Contactos::where(["ID_Usuario"=>$User->sub, "Numero_Tel"=>$params_array['Numero_Tel']])->first();
         
         if(is_object($numero_existe)){
@@ -282,6 +337,86 @@ class UserController extends Controller
         $data = array([
             "status"=>true,
             "mensaje"=>"Contacto de emergencia registrado"
+        ]);
+        
+        return json_encode($data);
+    }
+
+    public function updateContactos (Request $request){
+        //Desencriptamos token para obtener información del usuario
+            $token = $request->header('Authorization'); 
+            $jwtAuth = new \JWTAuth();
+            $User = $jwtAuth->checkToken($token, true);
+            
+        //Recogemos datos
+            $params_array['Nombre']=$request->input('Nombre', null);
+            $params_array['Apellidos']=$request->input('Apellidos', null);
+            $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
+            $params_array['Correo']=$request->input('Correo', null);
+
+            $validate = \Validator::make($params_array, [
+           'Nombre'=>'required',
+           'Numero_Tel'=>'required', 
+            ]);
+
+
+            if ($validate->fails()) {
+                $data = array([
+                "status"=>false,
+                "mensaje"=>"Ingrese los campos con *, son obligatorios"
+                ]);
+                return json_encode($data);
+            }
+
+
+            $validate = \Validator::make($params_array, [
+           'Nombre'=>'regex:{^[a-zA-Z ]+$}',
+            ]);
+
+            if ($validate->fails()) {
+                $data = array([
+                "status"=>false,
+                "mensaje"=>"Nombre invalido"
+                ]);
+                return json_encode($data);
+            }
+            if(!is_null($params_array['Apellidos'])){
+            $validate = \Validator::make($params_array, [
+           'Apellidos'=>'regex:{^[a-zA-Z ]+$}',
+            ]);
+
+            if ($validate->fails()) {
+                $data = array([
+                "status"=>false,
+                "mensaje"=>"Apellido invalido"
+                ]);
+                return json_encode($data);
+            }
+            }
+            if(!is_null($params_array['Correo'])){
+            $validate = \Validator::make($params_array, [
+           'Correo'=>'email',
+            ]);
+
+            if ($validate->fails()) {
+                $data = array([
+                "status"=>false,
+                "mensaje"=>"Correo invalido"
+                ]);
+                return json_encode($data);
+            }
+            }
+
+
+        Contactos::where(["ID_Usuario"=>$User->sub, "Numero_Tel"=>$params_array['Numero_Tel']])->update([
+            'Nombre'=>$params_array['Nombre'],
+            'Apellidos'=>$params_array['Apellidos'],
+            'Correo'=> $params_array['Correo']
+        ]);
+        
+        $data = array([
+            "status"=>true,
+            "mensaje"=>"Contacto de emergencia Actualizado"
         ]);
         
         return json_encode($data);
@@ -317,10 +452,10 @@ class UserController extends Controller
             $Contactos = Contactos::where([
                 'ID_Usuario'=>$User->sub])->get();
             
-        $data = array([
+        $data = array(
             "status"=>true,
             "contactos"=>$Contactos
-        ]);
+        );
         
         return json_encode($data);
     }

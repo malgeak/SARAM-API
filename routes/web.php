@@ -13,15 +13,23 @@ use App\Http\Middleware\DeviceMiddleware;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Rutas principales
 Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/cpanel', function () {
     return view('cpanel');
 });
+Route::get('/privacidad', function () {
+    return view('Cpanel.privacidad');
+});
+
+//Rutas de dispositivo
 Route::get('/api/saveDatos', 'sarv1Controller@saveDatos');
 
+//Creadores de secciones
+Route::get('/api/inicio', 'cpanelController@inicio')->middleware(AuthMiddleware::class);;
+Route::get('/api/contactos', 'cpanelController@contactos')->middleware(AuthMiddleware::class);;
 //Rutas Post
 Route::post('/api/registerUser', 'UserController@registro');
 Route::post('/api/login', 'UserController@login');
@@ -35,6 +43,7 @@ Route::post('/api/updateUser', 'UserController@updateUser')->middleware(AuthMidd
 Route::post('/api/getEstado', 'sarv1Controller@getDatos')->middleware(AuthMiddleware::class);
 Route::post('/api/getUbicacion', 'sarv1Controller@getUbicacion')->middleware(AuthMiddleware::class);
 Route::post('/api/setContactos', 'UserController@setContactos')->middleware(AuthMiddleware::class);
+Route::post('/api/updateContactos', 'UserController@updateContactos')->middleware(AuthMiddleware::class);
 Route::post('/api/delContactos', 'UserController@delContactos')->middleware(AuthMiddleware::class);
 Route::post('/api/getContactos', 'UserController@getContactos')->middleware(AuthMiddleware::class);
 Route::post('/api/deleteMoto', 'UserController@DeleteMoto')->middleware(AuthMiddleware::class);

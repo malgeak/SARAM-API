@@ -8,4 +8,4 @@
     </p>
     <p style="padding-top: 15px;">saram.com &copy; Nuestro compromiso es la seguridad del motociclista</p>
   </div>
-</footer><?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/footer.blade.php ENDPATH**/ ?>
+</footer><?php /**PATH /var/www/saram.com/resources/views/footer.blade.php ENDPATH**/ ?>

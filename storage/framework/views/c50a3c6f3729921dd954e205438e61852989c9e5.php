@@ -27,4 +27,4 @@
 	<span class="col-xl-1 col-lg-1 col-md-1 col-sm-1 d-none d-md-block d-sm-block text-white" style="font-size: 2vw"><i class="fas fa-envelope"></i></span>
 	<label class="col-xl-4 col-lg-4 col-md-4 col-sm-4 d-none d-md-block d-sm-block text-white" style="font-size: 1.5vw; margin-top: 2px;">contacto@saram.com</label>
 	<div class="col-xl-2 col-lg-2 d-md-none d-xl-block d-lg-block"></div>
-</div><?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/Contents/login.blade.php ENDPATH**/ ?>
+</div><?php /**PATH /var/www/saram.com/resources/views/Contents/login.blade.php ENDPATH**/ ?>

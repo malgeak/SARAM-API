@@ -6,4 +6,4 @@
 		<a href="">Leé aquí nuestros terminos y condiciones</a>
 		<h2 class="text-light" style="font-size: 2.5vw;">¡A RODAR!</h2>
 	</div>
-</div><?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/Contents/servicio.blade.php ENDPATH**/ ?>
+</div><?php /**PATH /var/www/saram.com/resources/views/Contents/servicio.blade.php ENDPATH**/ ?>

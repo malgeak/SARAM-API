@@ -137,4 +137,4 @@ border-radius: 2px; }
     <a class="text-light col-1" href="#multi-item-example" data-slide="next" style="margin-top: 4vw; padding-left: 0px; padding-right: 0px; text-align: left;"><i class="fas fa-angle-right fa-3x pl-3"></i></a>
 </div>
 <h1 class="text-secondary" style="font-size: 3vw; margin-top: 100px; margin-bottom: 100px;" >¡Recuerda que alguien te espera en casa!</h1>
-</div><?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/Contents/galeria.blade.php ENDPATH**/ ?>
+</div><?php /**PATH /var/www/saram.com/resources/views/Contents/galeria.blade.php ENDPATH**/ ?>
