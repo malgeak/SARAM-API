@@ -12,12 +12,15 @@ class cpanelController extends Controller
     	$token = $request->header('Authorization'); 
         $jwtAuth = new \JWTAuth();
         $User = $jwtAuth->checkToken($token, true);
+        $Motos = (new UserController)->getMotos($request);
+        $Motos = json_decode($Motos);
         $datos = array (
         	'status'=> $result_object->status,
         	'Estado' => $result_object->Estado,
         	'Nombre'=>  $User->Nombre
         );
-    	return view('Cpanel.inicio')->with('resultado', $datos);
+    	return view('Cpanel.inicio')->with(['resultado'=>$datos,
+            'Motos' => $Motos->motos]);
     }
 
     public function contactos(Request $request){
@@ -28,5 +31,22 @@ class cpanelController extends Controller
     	}else{
     		echo "Error de conexión";
     	}
+    }
+
+    public function info(Request $request){
+        $result = (new UserController)->getMotos($request);
+        $result_object = json_decode($result);  
+        if ($result_object->status==1) {
+            return view('Cpanel.info')->with('Motos', $result_object->motos);
+        }else{
+            echo "Error de conexión";
+        }
+    }
+
+
+    public function perfil(Request $request){
+        $result = (new UserController)->getUser($request);
+        $result_object = json_decode($result);  
+        return view('Cpanel.perfil')->with('Usuario', $result_object);
     }
 }

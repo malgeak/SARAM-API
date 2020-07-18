@@ -14,5 +14,13 @@
 		<i class="fa fa-times-circle" style="color: red; font-size: 250px; margin-top: 30px;"></i>
 		<p style="font-size: 20px;">¡Caida, Verifica el estado físico de la motocicleta!</p>
 	<?php endif; ?>
+	
+	<select id="selectmoto" onchange="setmot($(this).val());" class="" style="width: 450px; font-size: 18px;">
+		<option value="none" >Selecciona aquí la moto que deseas monitorear.</option>	
+		<?php $__currentLoopData = $Motos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Moto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+			<option value="<?php echo e($Moto->ID_Motocicleta); ?>" >Marca: <?php echo e($Moto->Marca); ?>, Modelo: <?php echo e($Moto->Modelo); ?>, Placa:<?php echo e($Moto->Placa); ?> </option>
+		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+	</select>
 <?php endif; ?>
+
 </div><?php /**PATH /var/www/saram.com/resources/views/Cpanel/inicio.blade.php ENDPATH**/ ?>

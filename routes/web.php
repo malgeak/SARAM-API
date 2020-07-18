@@ -23,13 +23,17 @@ Route::get('/cpanel', function () {
 Route::get('/privacidad', function () {
     return view('Cpanel.privacidad');
 });
+Route::get('/api/qrcode', 'UserController@QRgenerator')->middleware(AuthMiddleware::class);
 
 //Rutas de dispositivo
 Route::get('/api/saveDatos', 'sarv1Controller@saveDatos');
 
 //Creadores de secciones
-Route::get('/api/inicio', 'cpanelController@inicio')->middleware(AuthMiddleware::class);;
-Route::get('/api/contactos', 'cpanelController@contactos')->middleware(AuthMiddleware::class);;
+Route::get('/api/inicio', 'cpanelController@inicio')->middleware(AuthMiddleware::class);
+Route::get('/api/contactos', 'cpanelController@contactos')->middleware(AuthMiddleware::class);
+Route::get('/api/informacion', 'cpanelController@info')->middleware(AuthMiddleware::class);
+Route::get('/api/perfil', 'cpanelController@perfil')->middleware(AuthMiddleware::class);
+
 //Rutas Post
 Route::post('/api/registerUser', 'UserController@registro');
 Route::post('/api/login', 'UserController@login');
@@ -47,3 +51,4 @@ Route::post('/api/updateContactos', 'UserController@updateContactos')->middlewar
 Route::post('/api/delContactos', 'UserController@delContactos')->middleware(AuthMiddleware::class);
 Route::post('/api/getContactos', 'UserController@getContactos')->middleware(AuthMiddleware::class);
 Route::post('/api/deleteMoto', 'UserController@DeleteMoto')->middleware(AuthMiddleware::class);
+Route::post('/api/checkQR', 'UserController@QRCheck');

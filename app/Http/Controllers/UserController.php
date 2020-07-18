@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Generator;
 use App\Usuario;
 use App\Moto;
 use App\Device;
@@ -246,7 +247,7 @@ class UserController extends Controller
               'status'=>true,
               'motos'=>$Motos
             );
-            echo json_encode($data);
+            return json_encode($data);
     }
     public function setContactos (Request $request){
         //Desencriptamos token para obtener información del usuario
@@ -466,7 +467,7 @@ class UserController extends Controller
             $User = $jwtAuth->checkToken($token, true);
         //Obtenemos todos los datos
             $Usuario = Usuario::where(['ID_usuario'=>$User->sub])->first();
-            echo json_encode($Usuario);
+            return json_encode($Usuario);
     }
     public function userReady(Request $request){
         //Desencriptamos token para obtener información del usuario
@@ -578,5 +579,32 @@ class UserController extends Controller
         );
         }
         echo json_encode($data);
+    }
+
+    public function QRgenerator (Request $request){
+        $token=$request->header('Authorization');
+        $Generador = new Generator;
+        return $Generador->size(250)->generate($token);        
+    }
+    public function QRCheck(Request $reqeuest){
+         $token = $request->input('Token'); 
+         $jwtAuth = new \JWTAuth();
+         $Usuario = $jwtAuth->checkToken($token, false);        
+         if($Usuario){
+            $User = $jwtAuth->checkToken($token, true);        
+                $data=array(
+                    'status'=>true,
+                    'mensaje'=>"Bienvenido",
+                    'Token'=>$token,
+                    'Nombre'=>$User->Nombre,
+                    'Apellidos'=>$User->Apellidos
+                );
+         }else{
+            $data=array(
+                    'status'=>false,
+                    'mensaje'=>"El codigo QR es invalido"
+                );
+         }
+
     }
 }

@@ -29,11 +29,12 @@
     25 => 'Laravel\\Tinker\\TinkerServiceProvider',
     26 => 'Carbon\\Laravel\\ServiceProvider',
     27 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    28 => 'App\\Providers\\AppServiceProvider',
-    29 => 'App\\Providers\\AuthServiceProvider',
-    30 => 'App\\Providers\\EventServiceProvider',
-    31 => 'App\\Providers\\RouteServiceProvider',
-    32 => 'App\\Providers\\JwtAuthServiceProvider',
+    28 => 'SimpleSoftwareIO\\QrCode\\ServiceProvider',
+    29 => 'App\\Providers\\AppServiceProvider',
+    30 => 'App\\Providers\\AuthServiceProvider',
+    31 => 'App\\Providers\\EventServiceProvider',
+    32 => 'App\\Providers\\RouteServiceProvider',
+    33 => 'App\\Providers\\JwtAuthServiceProvider',
   ),
   'eager' => 
   array (
@@ -166,6 +167,7 @@
     'validator' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'validation.presence' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
+    'SimpleSoftwareIO\\QrCode\\Generator' => 'SimpleSoftwareIO\\QrCode\\ServiceProvider',
   ),
   'when' => 
   array (
@@ -206,6 +208,9 @@
     array (
     ),
     'Laravel\\Tinker\\TinkerServiceProvider' => 
+    array (
+    ),
+    'SimpleSoftwareIO\\QrCode\\ServiceProvider' => 
     array (
     ),
   ),

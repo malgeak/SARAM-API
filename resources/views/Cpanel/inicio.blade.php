@@ -14,5 +14,13 @@
 		<i class="fa fa-times-circle" style="color: red; font-size: 250px; margin-top: 30px;"></i>
 		<p style="font-size: 20px;">¡Caida, Verifica el estado físico de la motocicleta!</p>
 	@endif
+	
+	<select id="selectmoto" onchange="setmot($(this).val());" class="" style="width: 450px; font-size: 18px;">
+		<option value="none" >Selecciona aquí la moto que deseas monitorear.</option>	
+		@foreach($Motos as $Moto)
+			<option value="{{$Moto->ID_Motocicleta}}" >Marca: {{$Moto->Marca}}, Modelo: {{$Moto->Modelo}}, Placa:{{$Moto->Placa}} </option>
+		@endforeach
+	</select>
 @endif
+
 </div>

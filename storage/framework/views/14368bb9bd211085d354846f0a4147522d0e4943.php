@@ -56,14 +56,18 @@
                     <li>
                         <a id="btn_inicio" class="active-menu" href="#" onclick="inicio();"><i class="fa fa-home"></i> Inicio</a>
                     </li>
+                    
+                    <li>
+                        <a id="btn_perfil" href="#" onclick="perfil();"><i class="fa fa-edit"></i> Perfil</a>
+                    </li>
                     <li>
                         <a id="btn_contactos" href="#" onclick="contactos();"><i class="fa fa-group"></i> Contactos</a>
                     </li>
                     <li>
-                        <a id="btn_informacion" href="tab-panel.html"><i class="fa fa-files-o"></i> Información</a>
+                        <a id="btn_informacion" onclick="informacion()" href="#"><i class="fa fa-files-o"></i> Información</a>
                     </li>
                     <li>
-                        <a href="#" onclick="privacidad();"><i class="fa fa-shield" aria-hidden="true"></i> Politicas de privacidad</a>
+                        <a id="btn_privacidad" href="#" onclick="privacidad();"><i class="fa fa-shield" aria-hidden="true"></i> Politicas de privacidad</a>
                     </li>
                     <li>
                         <a href="tab-panel.html"><i class="fa fa-map-marker"></i> Ubicación</a>

@@ -64,6 +64,13 @@ class sarv1Controller extends Controller
             
             foreach ($ID_motos as $Moto => $ID) {
                 $Estado = Estado::where(['ID_motocicleta'=>$ID->ID_Motocicleta])->first();
+                if (!isset($Estado)) {
+                    $data = array(
+                        "status"=>true,
+                        "Estado" =>1
+                    );
+                    return json_encode($data);
+                }
                 $data = array(
                         "status"=>true,
                         "Estado" =>$Estado->Posicion
