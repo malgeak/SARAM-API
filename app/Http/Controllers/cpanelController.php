@@ -49,4 +49,67 @@ class cpanelController extends Controller
         $result_object = json_decode($result);  
         return view('Cpanel.perfil')->with('Usuario', $result_object);
     }
+
+    public function email (Request $request){
+        $params_array['nombre'] = $request->input("Nombre", null);
+        $params_array['correo'] = $request->input("Correo", null);
+        $params_array['telefono'] = $request->input("Telefono", null);
+        $params_array['mensaje'] = $request->input("Mensaje", null);
+
+        if(!isset($params_array['correo'])){
+            if (!isset($params_array['telefono']) || $params_array['telefono']=='undefined') {
+             $data = array(
+            'status'=>false,
+            'Mensaje'=>"Por favor, ingrese al menos un contacto."
+            );
+            return json_encode($data);    
+            }
+        }
+
+        $validate = \Validator::make($params_array, [
+           'nombre'=>'regex:{^[a-zA-Z ]+$}'
+        ]); 
+        if ($validate->fails()) {
+             $data = array(
+            'status'=>false,
+            'Mensaje'=>"Nombre invalido, solo se aceptan letras"
+            );
+            return json_encode($data);    
+        }
+        if (isset($params_array['correo'])) {
+         $validate = \Validator::make($params_array, [
+           'correo'=>'email',
+        ]); 
+        if ($validate->fails()) {
+             $data = array(
+            'status'=>false,
+            'Mensaje'=>"Correo invalido, por favor verifiquelo"
+            );
+            return json_encode($data);    
+        }
+        }
+        $validate = \Validator::make($params_array, [
+           'mensaje'=>'required',
+        ]); 
+        if ($validate->fails()) {
+             $data = array(
+            'status'=>false,
+            'Mensaje'=>"Escriba su mensaje por favor, nos servirá mucho"
+            );
+            return json_encode($data);    
+        }
+
+        $subject = "Información de contacto";
+        $for = "contacto@saram.com";
+        \Mail::send('Emails.contacto', $request->all(), function($msj) use($subject, $for){
+            $msj->from("saram@saram.com", "Systema Automático SARAM");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        $data = array(
+            'status'=>true,
+            'Mensaje'=>"En el menor tiempo posible te contactaremos por alguno de los medios que nos proporcionaste, ¡Gracias!"
+        );
+        return json_encode($data);
+    }
 }

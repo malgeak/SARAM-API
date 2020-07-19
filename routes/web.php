@@ -30,7 +30,7 @@ Route::get('/registro', function(){
 	return view('Contents.registro');
 });
 
-
+Route::post('/api/correo', 'cpanelController@email');
 
 //Rutas de dispositivo
 Route::get('/api/saveDatos', 'sarv1Controller@saveDatos');

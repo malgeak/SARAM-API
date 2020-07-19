@@ -15,25 +15,29 @@
 		<div class="row"  style=" width: 100%; padding-left: 0px; padding-right: 0px;">
 			<div class="col-12" style=" height: 40px;"></div>
 			<div class="col-xl-3 col-lg-2 col-md-2 col-sm-2 d-none d-md-block d-sm-block"></div>
-			<div class=" col-xl-6 col-lg-8 col-md-10 col-sm-10 d-none d-md-block d-sm-block bg-white rounded" style="text-align: center; padding: 10px;">
+			<div class=" col-xl-8 col-lg-8 col-md-10 col-sm-10 d-none d-md-block d-sm-block bg-white rounded" style="text-align: center; padding: 10px;">
 				<p style="font-weight: bold;">Aquí puedes escribir tu mensaje</p>
-		
 				<form id="login">
 					<div class="row" style="width: 95%; margin-top: 5vw"  >
 					<label class="col-xl-2 col-lg-2 col-md-2 col-sm-2" style="font-size: 2vw;" for="correo"><i class="fas fa-user"></i></label>
-					<input class="col-xl-10 col-lg-10 col-md-10 col-sm-10 form-control" type="email" name="correo" placeholder="Correo Electrónico" >
+					<input id="Nombre" class="col-xl-10 col-lg-10 col-md-10 col-sm-10 form-control" type="Text" name="Nombre" placeholder="Nombre" >
+					</div>
+					<div class="row" style="width: 95%; margin-top: 0.8vw"  >
+					<label class="col-xl-2 col-lg-2 col-md-2 col-sm-2" style="font-size: 2vw;" for="correo"><i class="fas fa-at"></i></label>
+					<input id="email" class="col-xl-10 col-lg-10 col-md-10 col-sm-10 form-control" type="email" name="correo" placeholder="Correo Electrónico" >
+					</div>
+					<div class="row" style="width: 95%; margin-top: 0.8vw"  >
+					<label class="col-xl-2 col-lg-2 col-md-2 col-sm-2" style="font-size: 2vw;" for="Phone"><i class="fas fa-phone"></i></label>
+					<input id="phone" class="col-xl-10 col-lg-10 col-md-10 col-sm-10 form-control" type="phone" name="correo" placeholder="Telefono" >
 					</div>
 					<div class="row" style="width: 95%; margin-top: 2vw"  >
-					<label class="col-xl-2 col-lg-2 col-md-2 col-sm-2" style="font-size: 2vw;" for="correo"><i class="fas fa-lock"></i></label>
-					<input class="col-xl-10 col-lg-10 col-md-10 col-sm-10 form-control" type="password" name="contrasena" placeholder="Contraseña" >
+					<label class="col-xl-2 col-lg-2 col-md-2 col-sm-2" style="font-size: 2vw;" for="textarea"><i class="fas fa-envelope"></i></label>
+					<textarea id="mensaje" class="col-xl-10 col-lg-10 col-md-10 col-sm-10 "  type="text" name="mensaje" rows="4" cols="50" placeholder="Escribe aqui tu sugerencia, pregunta o recomendación. Nosotros la leéremos." style="color: black;" ></textarea>
 					</div>
 				</form>
 			<div style=" width: 95%; text-align: right;">
-				<a href="#olvide">Olvide mi contraseña</a>
 			</div>
-			<button class="btn btn-primary" form="login" type="submit" style="width: 50%; margin-top: 3vw;">Ingresar</button>
-			<button class="btn btn-secondary" type="button" style="width: 50%; margin-top: 3vw; font-weight: bold;">Registrarme</button>
-			</div>
+			<button class="btn btn-primary" form="login" type="button" onclick=" enviar($('#Nombre').val(),$('#email').val(), $('#phone').val, $('#mensaje').val());" style="width: 50%; margin-top: 3vw;">Enviar</button>
 			<div class="col-xl-12 col-lg-12 col-md-12 d-none d-md-block d-sm-block" style="height: 20px;"></div>
 		</div>
 	</div>

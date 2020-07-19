@@ -195,4 +195,33 @@ function singup (No, Ap, Co, pwd, con){
 		$('#Notificaciones').modal('show');
 	}
 }
+
+function enviar(nom, cor, tel, men){
+     $.ajax({
+                    type:'POST',
+                    data: {
+                         Nombre:nom,
+                         Correo: cor,
+                         Telefono: tel,
+                         Mensaje:men
+                    },
+                    url: '/api/correo',
+                    success : function(json){
+                         resultado = JSON.parse(json);
+                         console.log(resultado);
+                         if (resultado.status) {
+                         $('#Alerta_Status').html('Exito');
+                         $('#Alerta_Mensaje').html(resultado.Mensaje);
+                         $('#Notificaciones').modal('show');
+                         }else{
+                              $('#Alerta_Status').html('Error');
+                         $('#Alerta_Mensaje').html(resultado.Mensaje);
+                         $('#Notificaciones').modal('show');
+                         }
+                    },
+                    error: function(json){
+                         console.log(json);
+                    }
+                });
+}
 inicio();
