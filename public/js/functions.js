@@ -1,4 +1,5 @@
 /*Functions of cpanel system*/
+Token = getCredentials();
 function inicio(){
 	$('#page-inner').empty();
 	$('#btn_inicio').addClass('active-menu');
@@ -11,8 +12,7 @@ function inicio(){
                     type:'GET',
                     url: '/api/inicio',
                     headers: {
-                    	Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                    	Authorization:Token                    },
                     data : {
                          ID_motocicleta: localStorage.getItem("Moto")
                     },
@@ -39,8 +39,7 @@ function contactos(){
                     type:'GET',
                     url: '/api/contactos',
                     headers: {
-                    	Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                    	Authorization:Token                    },
                     success : function(json){
                     	$('#page-inner').html(json);
                     },
@@ -61,8 +60,7 @@ function informacion(){
                     type:'GET',
                     url: '/api/informacion',
                     headers: {
-                         Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                         Authorization:Token                    },
                     success : function(json){
                          $('#page-inner').html(json);
                     },
@@ -103,8 +101,7 @@ function perfil(){
                     type:'GET',
                     url: '/api/perfil',
                     headers: {
-                         Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                         Authorization:Token                    },
                     data : {
                          ID_motocicleta: localStorage.getItem("Moto")
                     },
@@ -125,8 +122,7 @@ $.ajax({
                     type:'POST',
                     url: '/api/setContactos',
                     headers: {
-                    	Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                    	Authorization:Token                    },
                     data:{
                     	Nombre: name,
                     	Apellidos: Apellido,
@@ -160,8 +156,7 @@ $.ajax({
                     type:'POST',
                     url: '/api/updateContactos',
                     headers: {
-                    	Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                    	Authorization:Token                    },
                     data:{
                     	Nombre: name,
                     	Apellidos: Apellido,
@@ -195,8 +190,7 @@ $.ajax({
                     type:'POST',
                     url: '/api/delContactos',
                     headers: {
-                    	Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                    	Authorization:Token                    },
                     data:{
                     	Numero_Tel: Celular
                     },
@@ -229,8 +223,7 @@ function addmoto(Mod, Cil, Mar, Pla, ID_SARAM){
                     type:'POST',
                     url: '/api/addmoto',
                     headers: {
-                         Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                         Authorization:Token                    },
                     data:{
                          Modelo: Mod,
                          Marca: Mar,
@@ -263,8 +256,7 @@ function updatemoto(Mod, Cil, Mar, Pla, ID_SARAM, ID_moto){
                     type:'POST',
                     url: '/api/updatemoto',
                     headers: {
-                         Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                         Authorization:Token                    },
                     data:{
                          Modelo: Mod,
                          Marca: Mar,
@@ -298,8 +290,7 @@ function deletemoto(ID_moto){
                     type:'POST',
                     url: '/api/deleteMoto',
                     headers: {
-                         Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                         Authorization:Token                    },
                     data:{
 
                          ID_Moto: ID_moto
@@ -329,14 +320,14 @@ function deletemoto(ID_moto){
 //Funciones de inicio
 function setmot(id){
      localStorage.setItem("Moto", id);
+     inicio();
 }
 function updateperfil(No, Ap, DB, Dir, Tel, Email, TS, Alergi, Religio, Extra, Id){
      $.ajax({
                     type:'POST',
                     url: '/api/updateUser',
                     headers: {
-                         Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                         Authorization:Token                    },
                     data:{
                          Nombre: No,
                          Apellidos: Ap,
@@ -378,8 +369,7 @@ function checkEdo(){
                     type:'POST',
                     url: '/api/getEstado',
                     headers: {
-                         Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
-                    },
+                         Authorization:Token                    },
                     data : {
                          ID_motocicleta: localStorage.getItem("Moto")
                     },
@@ -394,5 +384,22 @@ function checkEdo(){
                     }
                 });
 }
+
+function getCredentials(){
+     if("Token" in localStorage){
+          return localStorage.getItem("Token");
+     }else{
+          window.location="/";
+     }
+}
+
+function exit(){
+     localStorage.removeItem("Token");
+     localStorage.removeItem("Nombre");
+     localStorage.removeItem("Moto");   
+     window.location="/";
+}
+
+getCredentials();
 
 setInterval('checkEdo()', 3000);

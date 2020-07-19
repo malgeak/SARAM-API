@@ -1,4 +1,4 @@
-<footer class="navbar bg-secondary" style="bottom: 0; margin-top: 10px; ">
+<footer class="navbar bg-secondary" style="bottom: 0;>
   <div class="container" >
     <p class="float-right" style="padding-top: 15px;">
       <a class="text-dark" href="#" style=""><i class="fab fa-facebook" style="font-size: 20px;"></i></a>

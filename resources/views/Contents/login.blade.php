@@ -7,18 +7,18 @@
 		<form id="login">
 			<div class="row" style="width: 95%; margin-top: 5vw"  >
 			<label class="col-xl-2 col-lg-2 col-md-2 col-sm-2" style="font-size: 2vw;" for="correo"><i class="fas fa-user"></i></label>
-			<input class="col-xl-10 col-lg-10 col-md-10 col-sm-10 form-control" type="email" name="correo" placeholder="Correo Electrónico" >
+			<input id="eUser" class="col-xl-10 col-lg-10 col-md-10 col-sm-10 form-control" type="email" name="correo" placeholder="Correo Electrónico" >
 			</div>
 			<div class="row" style="width: 95%; margin-top: 2vw"  >
 			<label class="col-xl-2 col-lg-2 col-md-2 col-sm-2" style="font-size: 2vw;" for="correo"><i class="fas fa-lock"></i></label>
-			<input class="col-xl-10 col-lg-10 col-md-10 col-sm-10 form-control" type="password" name="contrasena" placeholder="Contraseña" >
+			<input id="pwdUser" class="col-xl-10 col-lg-10 col-md-10 col-sm-10 form-control" type="password" name="contrasena" placeholder="Contraseña" >
 			</div>
 		</form>
 		<div style=" width: 95%; text-align: right;">
 		<a href="#olvide">Olvide mi contraseña</a>
 		</div>
-		<button class="btn btn-primary" form="login" type="submit" style="width: 50%; margin-top: 3vw;">Ingresar</button>
-		<button class="btn btn-secondary" type="button" style="width: 50%; margin-top: 3vw; font-weight: bold;">Registrarme</button>
+		<button class="btn btn-primary" form="login" type="button" onclick="login($('#eUser').val(), $('#pwdUser').val());" style="width: 50%; margin-top: 3vw;">Ingresar</button>
+		<button class="btn btn-secondary" type="button" style="width: 50%; margin-top: 3vw; font-weight: bold;" onclick="registro()">Registrarme</button>
 	</div>
 	<div class="col-xl-12 col-lg-12 col-md-12 d-none d-md-block d-sm-block" style="height: 20px;"></div>
 	<div class="col-xl-1 col-lg-1 col-md-2 col-sm-1 d-none d-sm-block d-md-block"></div>

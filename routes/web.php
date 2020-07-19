@@ -23,16 +23,31 @@ Route::get('/cpanel', function () {
 Route::get('/privacidad', function () {
     return view('Cpanel.privacidad');
 });
-Route::get('/api/qrcode', 'UserController@QRgenerator')->middleware(AuthMiddleware::class);
+Route::get('/login', function(){
+	return view('Contents.login');
+});
+Route::get('/registro', function(){
+	return view('Contents.registro');
+});
+
+
 
 //Rutas de dispositivo
 Route::get('/api/saveDatos', 'sarv1Controller@saveDatos');
 
 //Creadores de secciones
+//Secciones de CPANEL
 Route::get('/api/inicio', 'cpanelController@inicio')->middleware(AuthMiddleware::class);
 Route::get('/api/contactos', 'cpanelController@contactos')->middleware(AuthMiddleware::class);
 Route::get('/api/informacion', 'cpanelController@info')->middleware(AuthMiddleware::class);
 Route::get('/api/perfil', 'cpanelController@perfil')->middleware(AuthMiddleware::class);
+//Secciones de main
+Route::get('/api/main', 'PrincipalController@index');
+Route::get('/api/servicio', 'PrincipalController@servicio');
+Route::get('/api/galeria', 'PrincipalController@galeria');
+Route::get('/api/contacto', 'PrincipalController@contacto');
+Route::get('/api/acerca', 'PrincipalController@acerca');
+
 
 //Rutas Post
 Route::post('/api/registerUser', 'UserController@registro');
@@ -52,3 +67,4 @@ Route::post('/api/delContactos', 'UserController@delContactos')->middleware(Auth
 Route::post('/api/getContactos', 'UserController@getContactos')->middleware(AuthMiddleware::class);
 Route::post('/api/deleteMoto', 'UserController@DeleteMoto')->middleware(AuthMiddleware::class);
 Route::post('/api/checkQR', 'UserController@QRCheck');
+Route::post('/api/qrcode', 'UserController@QRgenerator')->middleware(AuthMiddleware::class);

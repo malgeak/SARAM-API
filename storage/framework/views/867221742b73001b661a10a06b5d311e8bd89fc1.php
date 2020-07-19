@@ -35,4 +35,4 @@
 		<button class="btn btn-secondary" type="button" onclick="ingresar()" style="width: 50%; margin-top: 2vw; font-weight: bold;">Ingresar</button>
 		</form>
 	</div>
-</div>
+</div><?php /**PATH /var/www/saram.com/resources/views/Contents/registro.blade.php ENDPATH**/ ?>

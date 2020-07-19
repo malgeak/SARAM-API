@@ -18,7 +18,25 @@ class UserController extends Controller
         $params_array['correo']= $request->input('Correo', null);
         $params_array['contrasena']= $request->input('Contrasena', null);
         $params_array['confirmacion']= $request->input('Confirmacion', null);
+        if (is_null($params_array['nombre']) || is_null($params_array['apellidos']) || is_null($params_array['correo']) || is_null($params_array['contrasena'])) {
+            $data=array(
+              'status'=>false,
+              'mensaje'=>"Todos los campos son necesarios",
+            );
+            return json_encode($data);
+        }
         //Validar Datos
+        $validate = \Validator::make($params_array,[
+            'correo' => 'unique:usuarios,Correo'
+        ]);
+        if($validate->fails()){
+            $data=array(
+              'status'=>false,
+              'mensaje'=>"Correo ya registrado",
+            );
+            return json_encode($data);   
+        }
+
         $validate = \Validator::make($params_array, [
            'nombre'=>'required|regex:{^[a-zA-Z ]+$}',
            'apellidos'=>'required|regex:{^[a-zA-Z ]+$}', 

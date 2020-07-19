@@ -70,7 +70,7 @@
  <script type="text/javascript">
  	function makerQR(){
  		$.ajax({
-                    type:'GET',
+                    type:'POST',
                     url: '/api/qrcode',
                     headers: {
                     	Authorization:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsIkNvcnJlbyI6ImdjY2ExOTk4QGdtYWlsLmNvbSIsIk5vbWJyZSI6IkNhcmxvcyBBbGJlcnRvIiwiQXBlbGxpZG9zIjoiR2lsIENhbHZpbGxvIiwiaWF0IjoxNTk0OTI5OTU0LCJleHAiOjE1OTU1MzQ3NTR9.GHmj0TkspMhvpxgT2m0-PpdM09hcdgr68AWTC0KmV5M'
