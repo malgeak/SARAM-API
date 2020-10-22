@@ -278,7 +278,7 @@ class UserController extends Controller
             $params_array['Apellidos']=$request->input('Apellidos', null);
             $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
             $params_array['Correo']=$request->input('Correo', null);
-
+            
             $validate = \Validator::make($params_array, [
            'Nombre'=>'required',
            'Numero_Tel'=>'required', 
@@ -331,9 +331,10 @@ class UserController extends Controller
                 return json_encode($data);
             }
             }
+        $params_array['Numero_Tel']=str_replace(' ','', $params_array['Numero_Tel']);
 
-
-        $numero_existe = Contactos::where(["ID_Usuario"=>$User->sub, "Numero_Tel"=>$params_array['Numero_Tel']])->first();
+        $numero_existe = Contactos::where(["ID_Usuario"=>$User->sub,
+            "Numero_Tel"=>$params_array['Numero_Tel']])->first();
         
         if(is_object($numero_existe)){
             $data = array([
@@ -368,14 +369,16 @@ class UserController extends Controller
             $User = $jwtAuth->checkToken($token, true);
             
         //Recogemos datos
+            $params_array['Id_contacto'] = $request->input("ID_Contacto", null);
             $params_array['Nombre']=$request->input('Nombre', null);
             $params_array['Apellidos']=$request->input('Apellidos', null);
             $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
             $params_array['Correo']=$request->input('Correo', null);
 
             $validate = \Validator::make($params_array, [
-           'Nombre'=>'required',
-           'Numero_Tel'=>'required', 
+                'Nombre'=>'required',
+                'Numero_Tel'=>'required',
+                'Id_contacto'=>'required'
             ]);
 
 
@@ -425,12 +428,24 @@ class UserController extends Controller
                 return json_encode($data);
             }
             }
+        $params_array['Numero_Tel']=str_replace(' ','', $params_array['Numero_Tel']);
+        $numero_existe = Contactos::where(["ID_Usuario"=>$User->sub,
+            "Numero_Tel"=>$params_array['Numero_Tel']])->first();
+        
+        if(is_object($numero_existe)){
+            $data = array([
+            "status"=>false,
+            "mensaje"=>"Número ya registrado en otro contacto"
+            ]);
+            return json_encode($data);
+        }
 
-
-        Contactos::where(["ID_Usuario"=>$User->sub, "Numero_Tel"=>$params_array['Numero_Tel']])->update([
+        Contactos::where(["ID_Usuario"=>$User->sub, 
+            "id_contacto"=>$params_array["Id_contacto"]])->update([
             'Nombre'=>$params_array['Nombre'],
             'Apellidos'=>$params_array['Apellidos'],
-            'Correo'=> $params_array['Correo']
+            'Correo'=> $params_array['Correo'],
+            'Numero_Tel'=>$params_array['Numero_Tel']
         ]);
         
         $data = array([

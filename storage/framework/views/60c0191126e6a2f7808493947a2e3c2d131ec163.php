@@ -1,4 +1,4 @@
-<div class="container" style="text-align: center;">
+<div class="container" style="text-align: center; margin-bottom: 40px;">
       <h1 class="text-secondary" style="font-size: 3vw;" >Acerca de Nosotros</h1>
         <p class="text-secondary" style="text-align: justify;">SARAM surgió a partir de la necesidad de los motociclistas de sentirse más seguros en la carretera, ya que aun llevando casco, guantes, rodilleras, chaleco, etc., el motociclista la mayoría de las veces viaja solitariamente, y es muy difícil que los familiares se enteren si el motociclista sufre un accidente cuando este no puede comunicarse, por ello, por el gran crecimiento que ha tenido el uso de la motocicleta, las altas probabilidades de sufrir un accidente en este medio de transporte y los altos índices de muertes por una lenta atención posterior a un accidente nace la idea de lanzar un producto que cubre la necesidad de alertar a familiares con el objetivo de que se realicen atenciones de auxilio más rápido al motociclista accidentado en cuestión. </p>
         <p class="text-secondary" style="text-align: justify;">
