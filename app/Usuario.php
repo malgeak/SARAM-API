@@ -11,7 +11,7 @@ class Usuario extends Model
     protected $fillable = [
         'Nombre', 'Apellidos', 'Correo','Contrasena', 'Edad', 'Direccion',
          'Telefono', 'Tipo_sangre', 'Alergias', 'Religion', 'Informacion_adicional',
-        'Sexo',
+        'Sexo','img_profile',
     ];
 
     /**

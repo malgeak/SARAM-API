@@ -43,6 +43,7 @@ Route::get('/api/informacion', 'cpanelController@info')->middleware(AuthMiddlewa
 Route::get('/api/perfil', 'cpanelController@perfil')->middleware(AuthMiddleware::class);
 //Secciones de main
 Route::get('/api/main', 'PrincipalController@index');
+Route::get('/api/bot', 'PrincipalController@bot');
 Route::get('/api/servicio', 'PrincipalController@servicio');
 Route::get('/api/galeria', 'PrincipalController@galeria');
 Route::get('/api/contacto', 'PrincipalController@contacto');

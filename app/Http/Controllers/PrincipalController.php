@@ -14,6 +14,14 @@ class PrincipalController extends Controller
     	}
     	return view('Contents.main')->with("Sesion", $Sesion);
     }
+    public function bot(Request $request){
+    	$Sesion = false;
+    	$Token = $request->input("token", null);
+    	if (!is_null($Token)) {
+    		$Sesion=true;
+    	}
+    	return view('Contents.bot')->with("Sesion", $Sesion);
+    }
 
     public function servicio(Request $request){
     	return view('Contents.servicio');

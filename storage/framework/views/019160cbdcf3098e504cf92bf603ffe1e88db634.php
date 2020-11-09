@@ -18,7 +18,13 @@
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="#" onclick="acerca()" style="font-weight: bold;">Acerca de <br class="d-none d-md-block d-sm-block"> Nosotros</a>
-      </li>    
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="#" onclick="bot();" style="font-weight: bold;"><br  class="d-none d-md-block d-sm-block">Ayuda</a>
+      </li>
     </ul>
   </div>  
-</nav><?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/Headers/head.blade.php ENDPATH**/ ?>
+</nav>
+
+
+<?php /**PATH C:\xampp\htdocs\SARAM-API\resources\views/Headers/head.blade.php ENDPATH**/ ?>

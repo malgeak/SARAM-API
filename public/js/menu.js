@@ -28,6 +28,36 @@ function inicio(){
 	}
 	
 }
+function bot(){
+	if("Token" in localStorage){
+	    Token=localStorage.getItem("Token");
+	    $.ajax({
+                    type:'GET',
+                    data: {
+                    	token: Token
+                    },
+                    url: '/api/bot',
+                    success : function(json){
+                    	$('#Content').html(json);
+                    },
+                    error: function(json){
+                    	console.log(json);
+                    }
+                });
+	}else{
+		$.ajax({
+                    type:'GET',
+                    url: '/api/bot',
+                    success : function(json){
+                    	$('#Content').html(json);
+                    },
+                    error: function(json){
+                    	console.log(json);
+                    }
+                });
+	}
+	
+}
 
 function servicio(){
 	$.ajax({

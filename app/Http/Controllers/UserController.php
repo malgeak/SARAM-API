@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Generator;
+use \Illuminate\Support\Facades\Storage;
 use App\Usuario;
 use App\Moto;
 use App\Device;
@@ -186,7 +187,7 @@ class UserController extends Controller
         $params_array['Placa']=$request->input('Placa', null);
         $params_array['SARAM']=$request->input('SARAM', null);
         $params_array['ID_Motocicleta'] = $request->input('ID_Moto', null);
-        
+        $Imagen = $request->file('Imagen', null);
         $validate = \Validator::make($params_array, [
            "Modelo" => 'required',
            "Marca" => 'required',
@@ -195,14 +196,20 @@ class UserController extends Controller
            "SARAM" => 'required',
            "ID_Motocicleta" => 'required'
         ]);
-        
-        
         if($validate->fails()){
             $data = array(
               'status' => false,
-              'mensaje' => "Es necesario que ingrese todos los datos",
-            );
+              'mensaje' => $validate->errors(),
+            );    
         }else{
+            $validate = \Validator::make(["imagen"=>$Imagen], ["imagen"=>"nullable|image"]);
+            if($validate->fails()){
+                $data = array(
+                'status' => false,
+                'mensaje' => $validate->errors(),
+                );  
+                return $data;
+            }
             //Desencriptamos token para obtener información del usuario
             $token = $request->header('Authorization'); 
             $jwtAuth = new \JWTAuth();
@@ -229,18 +236,33 @@ class UserController extends Controller
                     );    
                 return json_encode($data);
             }
-            if(is_object($validar_saram)){
+            if(is_object($validar_saram)){ 
+               $img_name= null;
+               if(!is_null($Imagen)){
+                   $extension= $Imagen->getClientOriginalExtension();
+                   $img_name=$params_array['ID_Motocicleta']."-".$User->sub.".".$extension;
+                   if(Storage::disk('motos_img')->exists($img_name)){
+                       Storage::disk('motos_img')->delete($img_name);
+                       Storage::disk('motos_img')->put($img_name, \File::get($Imagen));
+                   }else{
+                       Storage::disk('motos_img')->put($img_name, \File::get($Imagen));
+                   }
+                   $url_img=Storage::disk('motos_img')->url($img_name);
+                   Moto::where(['ID_usuario'=>$User->sub, 
+                       'ID_Motocicleta'=>$params_array['ID_Motocicleta']])->update([
+                           'img_profile'=>$url_img
+                       ]);
+               }
             //Actualización
-            Moto::where(
-                ['ID_usuario'=>$User->sub,
-                'ID_Motocicleta'=>$params_array['ID_Motocicleta']])->update([
+                Moto::where(
+                    ['ID_usuario'=>$User->sub,
+                    'ID_Motocicleta'=>$params_array['ID_Motocicleta']])->update([
                     'Modelo'=>$params_array['Modelo'],
                     'Marca'=>$params_array['Marca'],
                     'Cilindraje'=>$params_array['Cilindraje'],
                     'Placa'=>$params_array['Placa'],
                     'ID_saram'=>$params_array['SARAM']
-                ]);
-            
+                     ]);
             $data=array(
               'status'=>true,
               'mensaje'=>"Moto actualizada exitosamente"
@@ -278,7 +300,7 @@ class UserController extends Controller
             $params_array['Apellidos']=$request->input('Apellidos', null);
             $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
             $params_array['Correo']=$request->input('Correo', null);
-            
+            $Imagen=$request->File("Imagen", null);
             $validate = \Validator::make($params_array, [
            'Nombre'=>'required',
            'Numero_Tel'=>'required', 
@@ -352,8 +374,24 @@ class UserController extends Controller
         $Contacto->Numero_Tel =  $params_array['Numero_Tel'];
         if(!is_null($params_array['Correo']))
             $Contacto->Correo =  $params_array['Correo'];
-        $Contacto->save();
-        
+        $id_Contacto=$Contacto->save();
+        $img_name = null;
+               if(!is_null($Imagen)){
+                   $id_Contacto = Contactos::where(['ID_Usuario'=>$User->sub])->max('id_contacto');
+                   $extension = $Imagen->getClientOriginalExtension();
+                   $img_name = $User->sub."-".$id_Contacto.".".$extension;
+                   if(Storage::disk('contactos_img')->exists($img_name)){
+                       Storage::disk('contactos_img')->delete($img_name);
+                       Storage::disk('contactos_img')->put($img_name, \File::get($Imagen));
+                   }else{
+                       Storage::disk('contactos_img')->put($img_name, \File::get($Imagen));
+                   }
+                   $url_img=Storage::disk('contactos_img')->url($img_name);
+                   Contactos::where(['ID_Usuario'=>$User->sub, 
+                       'id_contacto'=>$id_Contacto])->update([
+                           'img_profile'=>$url_img
+                       ]);
+               }    
         $data = array([
             "status"=>true,
             "mensaje"=>"Contacto de emergencia registrado"
@@ -361,7 +399,6 @@ class UserController extends Controller
         
         return json_encode($data);
     }
-
     public function updateContactos (Request $request){
         //Desencriptamos token para obtener información del usuario
             $token = $request->header('Authorization'); 
@@ -374,7 +411,7 @@ class UserController extends Controller
             $params_array['Apellidos']=$request->input('Apellidos', null);
             $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
             $params_array['Correo']=$request->input('Correo', null);
-
+            $Imagen=$request->File('Imagen', null);
             $validate = \Validator::make($params_array, [
                 'Nombre'=>'required',
                 'Numero_Tel'=>'required',
@@ -429,23 +466,30 @@ class UserController extends Controller
             }
             }
         $params_array['Numero_Tel']=str_replace(' ','', $params_array['Numero_Tel']);
-        $numero_existe = Contactos::where(["ID_Usuario"=>$User->sub,
-            "Numero_Tel"=>$params_array['Numero_Tel']])->first();
         
-        if(is_object($numero_existe)){
-            $data = array([
-            "status"=>false,
-            "mensaje"=>"Número ya registrado en otro contacto"
-            ]);
-            return json_encode($data);
-        }
-
+        if(!is_null($Imagen)){
+                   $id_Contacto = $params_array['Id_contacto'];
+                   $extension = $Imagen->getClientOriginalExtension();
+                   $img_name = $User->sub."-".$id_Contacto.".".$extension;
+                   if(Storage::disk('contactos_img')->exists($img_name)){
+                       Storage::disk('contactos_img')->delete($img_name);
+                       Storage::disk('contactos_img')->put($img_name, \File::get($Imagen));
+                   }else{
+                       Storage::disk('contactos_img')->put($img_name, \File::get($Imagen));
+                   }
+                   $url_img=Storage::disk('contactos_img')->url($img_name);
+                   Contactos::where(['ID_Usuario'=>$User->sub, 
+                       'id_contacto'=>$id_Contacto])->update([
+                           'img_profile'=>$url_img
+                       ]);
+              }
+        
         Contactos::where(["ID_Usuario"=>$User->sub, 
             "id_contacto"=>$params_array["Id_contacto"]])->update([
             'Nombre'=>$params_array['Nombre'],
             'Apellidos'=>$params_array['Apellidos'],
             'Correo'=> $params_array['Correo'],
-            'Numero_Tel'=>$params_array['Numero_Tel']
+            'Numero_Tel'=>$params_array['Numero_Tel'],
         ]);
         
         $data = array([
@@ -455,7 +499,6 @@ class UserController extends Controller
         
         return json_encode($data);
     }
-    
     public function delContactos (Request $request){
         //Desencriptamos token para obtener información del usuario
             $token = $request->header('Authorization'); 
@@ -463,9 +506,9 @@ class UserController extends Controller
             $User = $jwtAuth->checkToken($token, true);
             
         //Recogemos datos
-            $params_array['Numero_Tel']=$request->input('Numero_Tel', null);
+            $params_array['ID_Contacto']=$request->input('ID_Contacto', null);
             
-            Contactos::where(['Numero_Tel'=>$params_array['Numero_Tel'], 
+            Contactos::where(['id_contacto'=>$params_array['ID_Contacto'], 
                 'ID_Usuario'=>$User->sub])->delete();
             
         $data = array([
@@ -474,8 +517,7 @@ class UserController extends Controller
         ]);
         
         return json_encode($data);
-    }
-    
+    }  
     public function getContactos (Request $request){
         //Desencriptamos token para obtener información del usuario
             $token = $request->header('Authorization'); 
@@ -535,6 +577,7 @@ class UserController extends Controller
         $params_array['Alergias']= $request->input('Alergias', null);
         $params_array['Religion']= $request->input('Religion', null);
         $params_array['Extras']= $request->input('Extras', null);
+        $Imagen = $request->File('Imagen', null);
         //Validar Datos
         $validate = \Validator::make($params_array, [
            'nombre'=>'required|regex:{^[a-zA-Z ]+$}',
@@ -604,8 +647,23 @@ class UserController extends Controller
             $Usuario->Religion = $params_array['Religion'];
         if(!is_null($params_array['Extras']))
             $Usuario->Informacion_adicional = $params_array['Extras'];
-        
         $Usuario->save();
+        
+        $img_name= null;
+        if(!is_null($Imagen)){
+                   $extension= $Imagen->getClientOriginalExtension();
+                   $img_name=$User->sub."-img.".$extension;
+                   if(Storage::disk('avatar')->exists($img_name)){
+                       Storage::disk('avatar')->delete($img_name);
+                       Storage::disk('avatar')->put($img_name, \File::get($Imagen));
+                   }else{
+                       Storage::disk('avatar')->put($img_name, \File::get($Imagen));
+                   }
+                   $url_img=Storage::disk('avatar')->url($img_name);
+                   Usuario::where(['ID_usuario'=>$User->sub,])->update([
+                           'img_profile'=>$url_img
+                       ]);
+        }
         $data = array(
             "status" => true,
             "mensaje" => "La actualización de sus datos fué exitosa"

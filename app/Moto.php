@@ -10,7 +10,7 @@ class Moto extends Model
     
     protected $fillable = [
         'ID_usuario', 'Modelo','Marca', 'Cilindraje', 'Placa',
-         'ID_saram',
+         'ID_saram','img_profile'
     ];
 
     /**

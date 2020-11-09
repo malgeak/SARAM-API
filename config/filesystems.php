@@ -64,6 +64,24 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
+        'motos_img' =>[
+            'driver' => 'local',
+            'root' => storage_path('app/motos_img'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+        'contactos_img' =>[
+            'driver' => 'local',
+            'root' => storage_path('app/contactos_img'),
+            'url' => env('APP_URL').'/contactos_img',
+            'visibility' => 'public',
+        ],
+        'avatar' =>[
+            'driver' => 'local',
+            'root' => storage_path('app/avatar'),
+            'url' => env('APP_URL').'/avatar',
+            'visibility' => 'public',
+        ],
 
     ],
 
@@ -80,6 +98,9 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/motos_img'),
+        public_path('contactos_img') => storage_path('app/contactos_img'),
+        public_path('avatar') => storage_path('app/avatar'),
     ],
 
 ];
